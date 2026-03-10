@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "594671761511",
+    "project_id": "st197-pride-pfp-maker",
+    "storage_bucket": "st197-pride-pfp-maker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594671761511:android:04580273288a9fc112bcc2",
+        "android_client_info": {
+          "package_name": "com.temp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT38wb9ZSygvEE28ymBV4nghvxUzDfvc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
