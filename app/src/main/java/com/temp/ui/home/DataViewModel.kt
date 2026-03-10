@@ -210,7 +210,7 @@ class DataViewModel() : ViewModel() {
                     )
                 )
             }
-            layerPath.add(LayerModel(listColor.first().path, true, listColor))
+            layerPath.add(LayerModel(listColor.first().path, true, listColor, "${prefix}thumb_${i}${suffix}"))
         }
         return layerPath
     }

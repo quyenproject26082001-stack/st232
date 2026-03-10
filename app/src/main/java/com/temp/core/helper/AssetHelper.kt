@@ -17,6 +17,9 @@ import java.io.FileOutputStream
 
 
 object AssetHelper {
+
+
+
     // Read sub folder
     fun getSubfoldersAsset(context: Context, path: String): ArrayList<String> {
         val allData = context.assets.list(path)
@@ -161,11 +164,16 @@ object AssetHelper {
                 val navigationImage =
                     "${AssetsKey.DATA_ASSET}${character}/${sortedLayer[i]}/${folderOrImageSortedList.last()}"
                 folderOrImageSortedList.removeAt(folderOrImageSortedList.size - 1)
+                // Tách thumb files ra khỏi list
+                val thumbFiles = folderOrImageSortedList.filter { it.startsWith("thumb_") }
+                    .sortedBy { it.removePrefix("thumb_").removeSuffix(".png").toIntOrNull() ?: 0 }
+                    .map { "${AssetsKey.DATA_ASSET}$character/${sortedLayer[i]}/$it" }
+                folderOrImageSortedList.removeAll { it.startsWith("thumb_") }
                 // Nếu không có folder -> không có màu
                 val layer = if (AssetsKey.FIRST_IMAGE.any { it in folderOrImageSortedList[0] }) {
                     getDataNoColor(character, folderOrImageSortedList, sortedLayer[i])
                 } else {
-                    getDataColor(assetManager, character, folderOrImageSortedList, sortedLayer[i])
+                    getDataColor(assetManager, character, folderOrImageSortedList, sortedLayer[i], thumbFiles)
                 }
                 if (layer.isEmpty()) {
                     Log.e("AssetDebug", "⚠️ EMPTY LAYER: character=$character, folder=${sortedLayer[i]}, folderOrImageSortedList=$folderOrImageSortedList")
@@ -203,7 +211,8 @@ object AssetHelper {
     }
 
     private fun getDataColor(
-        assetManager: AssetManager, character: String, folderList: List<String>, folder: String
+        assetManager: AssetManager, character: String, folderList: List<String>, folder: String,
+        thumbFiles: List<String> = emptyList()
     ): ArrayList<LayerModel> {
         val colorNames = folderList.map { "#$it" }
         val fileList = folderList.map { colorFolder ->
@@ -224,7 +233,12 @@ object AssetHelper {
         }.toCollection(ArrayList())
 
         return fileList.first().take(minSize).mapIndexed { index, file ->
-            LayerModel(image = file, isMoreColors = true, listColor = colorList[index])
+            LayerModel(
+                image = file,
+                isMoreColors = true,
+                listColor = colorList[index],
+                thumb = thumbFiles.getOrElse(index) { "" }
+            )
         }.toCollection(ArrayList())
     }
 }
