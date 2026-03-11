@@ -77,7 +77,7 @@
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Noch nicht gespeichert, möchtest du wirklich beenden?</string>
     <string name="change_your_whole_design_are_you_sure">Möchtest du zurücksetzen?</string>
     <string name="character_maker">Pixel Maker</string>
-    <string name="no_item_here">Keine Gegenstände hier</string>
+    <string name="no_current_history">Keine Gegenstände hier</string>
     <string name="quick_maker">Schneller Ersteller</string>
     <string name="my_character">Mein Pixel</string>
     <string name="category">Pixel Maker</string>
@@ -170,6 +170,5 @@
     <string name="pride_create">Erstellen</string>
     <string name="pride_select_at_least_one">Bitte wähle mindestens eine Flagge aus</string>
     <string name="pride_max_colors_reached">Maximal 10 Farben erlaubt</string>
-    <string name="my_pride">Mein Pride</string>
     <string name="random_bag">Random Bag</string>
 </resources>

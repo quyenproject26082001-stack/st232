@@ -120,6 +120,7 @@
 
 
         <TextView
+            android:id="@+id/titleBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
@@ -250,10 +251,9 @@
             android:layout_marginTop="86dp"
             android:orientation="vertical"
             android:layout_marginBottom="25dp"
-            android:visibility="gone"
-            tools:visibility="gone"
+            android:visibility="visible"
+            tools:visibility="visible"
             >
-
 
             <!--            rcvBackgroundImage-->
             <androidx.recyclerview.widget.RecyclerView
@@ -266,7 +266,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="5"
                 tools:itemCount="10"
-                tools:visibility="gone"
+                tools:visibility="visible"
                 tools:listitem="@layout/item_background_image" />
 
             <!--            rcvBackgroundColor-->
@@ -359,7 +359,7 @@
             android:scrollbars="none"
             android:paddingTop="15dp"
             android:clipChildren="false"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:layout_marginBottom="22dp"
             android:isScrollContainer="true"
             android:visibility="gone">
@@ -395,6 +395,7 @@
                         android:layout_marginTop="-2dp"
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginEnd="16dp"
+                        app:tint="#01579B"
                         android:src="@drawable/ic_done_background" />
                 </FrameLayout>
 

@@ -52,7 +52,6 @@ import com.temp.ui.my_creation.adapter.MyAvatarAdapter
 import com.temp.ui.my_creation.adapter.TypeAdapter
 import com.temp.ui.my_creation.fragment.MyAvatarFragment
 import com.temp.ui.my_creation.fragment.MyDesignFragment
-import com.temp.ui.my_creation.fragment.MyOverlayFragment
 import com.temp.ui.my_creation.view_model.MyAvatarViewModel
 import com.temp.ui.my_creation.view_model.MyCreationViewModel
 import com.temp.ui.permission.PermissionViewModel
@@ -71,7 +70,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
 
     private var myAvatarFragment: MyAvatarFragment? = null
     private var myDesignFragment: MyDesignFragment? = null
-    private var myOverlayFragment: MyOverlayFragment? = null
     private var isInSelectionMode = false
     private var isAllSelected = false
     private var pendingDownloadList: ArrayList<String>? = null
@@ -105,25 +103,16 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
                             if (type != -1) {
                                 when (type) {
                                     ValueKey.AVATAR_TYPE -> {
-                                        imvTabBackground.setImageResource(R.drawable.bg_pride_slt)
+                                        imvTabBackground.setImageResource(R.drawable.bg_avatar_selected)
                                         setupSelectedTab(tvMyPride)
                                         setupUnselectedTab(tvMyDesign)
-                                        setupUnselectedTab(tvMyOverlay)
                                         showFragment(ValueKey.AVATAR_TYPE)
                                     }
                                     ValueKey.MY_DESIGN_TYPE -> {
                                         imvTabBackground.setImageResource(R.drawable.bg_design_slt)
                                         setupUnselectedTab(tvMyPride)
                                         setupSelectedTab(tvMyDesign)
-                                        setupUnselectedTab(tvMyOverlay)
                                         showFragment(ValueKey.MY_DESIGN_TYPE)
-                                    }
-                                    ValueKey.PRIDE_OVERLAY_TYPE -> {
-                                        imvTabBackground.setImageResource(R.drawable.bg_overlay_slt)
-                                        setupUnselectedTab(tvMyPride)
-                                        setupUnselectedTab(tvMyDesign)
-                                        setupSelectedTab(tvMyOverlay)
-                                        showFragment(ValueKey.PRIDE_OVERLAY_TYPE)
                                     }
                                 }
                                 updateBottomButtonsVisibility()
@@ -169,7 +158,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
                         when {
                             avatarFragment is MyAvatarFragment && avatarFragment.isVisible -> avatarFragment.resetSelectionMode()
                             designFragment is MyDesignFragment && designFragment.isVisible -> designFragment.resetSelectionMode()
-                            overlayFragment is MyOverlayFragment && overlayFragment.isVisible -> overlayFragment.resetSelectionMode()
                         }
                     } else {
                         startIntentWithClearTop(HomeActivity::class.java)
@@ -189,7 +177,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
 
             btnMyPixel.tap { viewModel.setTypeStatus(ValueKey.AVATAR_TYPE) }
             btnMyDesign.tap { viewModel.setTypeStatus(ValueKey.MY_DESIGN_TYPE) }
-            btnMyOverlay.tap { viewModel.setTypeStatus(ValueKey.PRIDE_OVERLAY_TYPE) }
 
             // WhatsApp, Telegram, and Download buttons in lnlBottom
             val layoutBottom = lnlBottom.getChildAt(0)
@@ -259,10 +246,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
                 doSelect = { designFragment.selectAllItems() }
                 doDeselect = { designFragment.deselectAllItems() }
             }
-            overlayFragment is MyOverlayFragment && overlayFragment.isVisible -> {
-                doSelect = { overlayFragment.selectAllItems() }
-                doDeselect = { overlayFragment.deselectAllItems() }
-            }
+
             else -> return
         }
 
@@ -285,7 +269,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
         when {
             avatarFragment is MyAvatarFragment && avatarFragment.isVisible -> avatarFragment.deleteSelectedItems()
             designFragment is MyDesignFragment && designFragment.isVisible -> designFragment.deleteSelectedItems()
-            overlayFragment is MyOverlayFragment && overlayFragment.isVisible -> overlayFragment.deleteSelectedItems()
         }
     }
 
@@ -297,7 +280,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
         return when {
             avatarFragment is MyAvatarFragment && avatarFragment.isVisible -> avatarFragment.getSelectedPaths()
             designFragment is MyDesignFragment && designFragment.isVisible -> designFragment.getSelectedPaths()
-            overlayFragment is MyOverlayFragment && overlayFragment.isVisible -> overlayFragment.getSelectedPaths()
             else -> arrayListOf()
         }
     }
@@ -328,7 +310,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
         binding.apply {
             tvMyPride.select()
             tvMyDesign.select()
-            tvMyOverlay.select()
         }
     }
 
@@ -425,26 +406,20 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
             myDesignFragment = MyDesignFragment()
             transaction.add(R.id.frmList, myDesignFragment!!, "MyDesignFragment")
         }
-        if (myOverlayFragment == null) {
-            myOverlayFragment = MyOverlayFragment()
-            transaction.add(R.id.frmList, myOverlayFragment!!, "MyOverlayFragment")
-        }
+
 
         when (type) {
             ValueKey.AVATAR_TYPE -> {
                 myAvatarFragment?.let { transaction.show(it) }
                 myDesignFragment?.let { transaction.hide(it) }
-                myOverlayFragment?.let { transaction.hide(it) }
             }
             ValueKey.MY_DESIGN_TYPE -> {
                 myAvatarFragment?.let { transaction.hide(it) }
                 myDesignFragment?.let { transaction.show(it) }
-                myOverlayFragment?.let { transaction.hide(it) }
             }
             ValueKey.PRIDE_OVERLAY_TYPE -> {
                 myAvatarFragment?.let { transaction.hide(it) }
                 myDesignFragment?.let { transaction.hide(it) }
-                myOverlayFragment?.let { transaction.show(it) }
             }
         }
 
@@ -495,7 +470,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
             when {
                 avatarFragment is MyAvatarFragment && avatarFragment.isVisible -> avatarFragment.resetSelectionMode()
                 designFragment is MyDesignFragment && designFragment.isVisible -> designFragment.resetSelectionMode()
-                overlayFragment is MyOverlayFragment && overlayFragment.isVisible -> overlayFragment.resetSelectionMode()
             }
             exitSelectionMode()
         }
@@ -578,7 +552,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityAlbumBinding>() {
     }
 
     private fun setupUnselectedTab(textView: android.widget.TextView) {
-        textView.setTextColor(Color.parseColor("#AB5BFF"))
+        textView.setTextColor(Color.parseColor("#01579B"))
     }
 
     // Public method to update select all icon based on selection state

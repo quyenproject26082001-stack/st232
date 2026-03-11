@@ -615,7 +615,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
     private fun handleRandomAllLayer() {
         lifecycleScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
-                binding.actionBar.btnActionBarRightText.isEnabled = false
+                binding.actionBar.btnActionBarRight.isEnabled = false
             }
             val timeStart = System.currentTimeMillis()
             val isOutTurn = viewModel.setClickRandomFullLayer()
@@ -631,7 +631,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                 if (isOutTurn) binding.btnRandom.invisible()
                 val timeEnd = System.currentTimeMillis()
                 delay(800)
-                binding.actionBar.btnActionBarRightText.isEnabled = true
+                binding.actionBar.btnActionBarRight.isEnabled = true
             }
         }
     }

@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="6dp"
-                    android:fontFamily="@font/londrina_solid_regular"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/add_to_telegram"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginStart="14dp"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/download"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />

@@ -39,29 +39,29 @@ class BottomNavigationCustomizeAdapter(private val context: Context) :
 
         fun bind(item: NavigationModel, position: Int) = with(binding) {
 
-            // Apply circular clipping to cvContent (so shimmer/image fills circle and doesn't overflow)
-            cvContent.clipToOutline = true
-            cvContent.outlineProvider = object : ViewOutlineProvider() {
-                override fun getOutline(view: View, outline: Outline) {
-                    outline.setOval(0, 0, view.width, view.height)
-                }
-            }
-
-            // Apply circular clipping to imvImage (shimmer layer - fills full circle)
-            imvImage.clipToOutline = true
-            imvImage.outlineProvider = object : ViewOutlineProvider() {
-                override fun getOutline(view: View, outline: Outline) {
-                    outline.setOval(0, 0, view.width, view.height)
-                }
-            }
-
-            // Apply circular clipping to imvImageBG (actual image layer - with margin)
-            imvImageBG.clipToOutline = true
-            imvImageBG.outlineProvider = object : ViewOutlineProvider() {
-                override fun getOutline(view: View, outline: Outline) {
-                    outline.setOval(0, 0, view.width, view.height)
-                }
-            }
+//            // Apply circular clipping to cvContent (so shimmer/image fills circle and doesn't overflow)
+//            cvContent.clipToOutline = true
+//            cvContent.outlineProvider = object : ViewOutlineProvider() {
+//                override fun getOutline(view: View, outline: Outline) {
+//                    outline.setOval(0, 0, view.width, view.height)
+//                }
+//            }
+//
+//            // Apply circular clipping to imvImage (shimmer layer - fills full circle)
+//            imvImage.clipToOutline = true
+//            imvImage.outlineProvider = object : ViewOutlineProvider() {
+//                override fun getOutline(view: View, outline: Outline) {
+//                    outline.setOval(0, 0, view.width, view.height)
+//                }
+//            }
+//
+//            // Apply circular clipping to imvImageBG (actual image layer - with margin)
+//            imvImageBG.clipToOutline = true
+//            imvImageBG.outlineProvider = object : ViewOutlineProvider() {
+//                override fun getOutline(view: View, outline: Outline) {
+//                    outline.setOval(0, 0, view.width, view.height)
+//                }
+//            }
 
             val offset = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
@@ -78,11 +78,11 @@ class BottomNavigationCustomizeAdapter(private val context: Context) :
 
                 // Use translationY for visual effect without affecting layout
                 cvContent.translationZ = 0f
-                cvContent.translationY = -offset
+                cvContent.translationY = 0f
 
             } else {
                 // Use same bottom margin as selected to maintain consistent height
-                binding.main.setMargins(0, 15.dp(context), 8.dp(context), 15.dp(context))
+                binding.main.setMargins(0, 0.dp(context), 8.dp(context), 0.dp(context))
 
                 imvImage.setBackgroundColor(Color.TRANSPARENT)
                 cvContent.setBackgroundResource(R.drawable.bg_uslt_navi_shape)

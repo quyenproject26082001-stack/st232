@@ -730,6 +730,7 @@ class AddCharacterActivity : BaseActivity<ActivityAddCharacterBinding>() {
                 bgOther.visible()
             }
 
+            if (isBackground) titleBackground.visible() else titleBackground.gone()
 
         }
     }
