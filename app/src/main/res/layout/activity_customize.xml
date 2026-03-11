@@ -45,8 +45,8 @@
     <!--    btnFlip-->
     <ImageView
         android:id="@+id/btnFlip"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -58,8 +58,8 @@
     <!--    btnHide-->
     <ImageView
         android:id="@+id/btnHide"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -158,14 +158,16 @@
         tools:listitem="@layout/item_customize" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/bg_cus"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/layoutMove"
         app:layout_constraintTop_toBottomOf="@id/gl056">
 
         <TextView
-            android:id="@+id/btnReset"
+            android:id="@+id/btnResetMove"
             android:layout_width="85dp"
             android:layout_height="35dp"
             android:layout_marginStart="21dp"
@@ -179,7 +181,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
+        <ImageView
             android:id="@+id/rotateToRight"
             android:layout_width="85dp"
             android:layout_height="35dp"
@@ -190,7 +192,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageView
             android:id="@+id/rotateToLeft"
             android:layout_width="85dp"
             android:layout_height="35dp"
@@ -201,7 +203,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
+        <ImageView
             android:id="@+id/btnMoveLeft"
             android:layout_width="31dp"
             android:layout_height="31dp"
@@ -211,7 +213,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
+        <ImageView
             android:id="@+id/btnMoveUp"
             android:layout_width="31dp"
             android:layout_height="31dp"
@@ -220,7 +222,7 @@
             app:layout_constraintBottom_toTopOf="@id/btnMoveLeft"
             app:layout_constraintStart_toEndOf="@id/btnMoveLeft" />
 
-        <FrameLayout
+        <ImageView
             android:id="@+id/btnMoveDown"
             android:layout_width="31dp"
             android:layout_height="31dp"
@@ -229,7 +231,7 @@
             app:layout_constraintStart_toEndOf="@id/btnMoveLeft"
             app:layout_constraintTop_toBottomOf="@id/btnMoveLeft" />
 
-        <FrameLayout
+        <ImageView
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:background="@color/white"
@@ -239,7 +241,7 @@
             app:layout_constraintStart_toEndOf="@id/btnMoveLeft"
             app:layout_constraintTop_toBottomOf="@id/btnMoveUp" />
 
-        <FrameLayout
+        <ImageView
             android:id="@+id/btnMoveRight"
             android:layout_width="31dp"
             android:layout_height="31dp"

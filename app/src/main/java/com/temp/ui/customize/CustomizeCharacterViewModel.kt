@@ -22,6 +22,7 @@ import com.temp.data.model.custom.ItemColorImageModel
 import com.temp.data.model.custom.ItemColorModel
 import com.temp.data.model.custom.ItemNavCustomModel
 import com.temp.data.model.custom.LayerListModel
+import com.temp.data.model.custom.LayerTransformModel
 import com.temp.data.model.custom.NavigationModel
 import com.temp.data.model.custom.SuggestionModel
 import kotlinx.coroutines.Dispatchers
@@ -86,6 +87,23 @@ class CustomizeCharacterViewModel : ViewModel() {
 
     // Danh sách ImageView trên layout
     val imageViewList = ArrayList<ImageView>()
+
+
+    // Transform per layer (translationX, translationY, rotation)
+
+
+    val layerTransformList = ArrayList<LayerTransformModel>()
+
+    fun initLayerTransformList(size: Int) {
+        layerTransformList.clear()
+        repeat(size) { layerTransformList.add(LayerTransformModel())
+        }
+    }
+
+    fun resetLayerTransform(position: Int) {
+        if (position !in layerTransformList.indices) return
+        layerTransformList[position] = LayerTransformModel()
+    }
 
     val colorListMost = ArrayList<String>()
 
@@ -667,7 +685,8 @@ class CustomizeCharacterViewModel : ViewModel() {
             keySelectedItemList = ArrayList(keySelectedItemList),
             isShowColorList = ArrayList(isShowColorList),
             pathSelectedList = ArrayList(pathSelectedList),
-            isFlip = _isFlip.value
+            isFlip = _isFlip.value,
+            layerTransformList = ArrayList(layerTransformList)
         )
     }
 
@@ -680,6 +699,10 @@ class CustomizeCharacterViewModel : ViewModel() {
         updateIsShowColorList(suggestionModel.isShowColorList)
         updatePathSelectedList(suggestionModel.pathSelectedList)
         setIsFlipValue(suggestionModel.isFlip)
+        layerTransformList.clear()
+        suggestionModel.layerTransformList.forEach {
+            layerTransformList.add(LayerTransformModel(it.translationX,it.translationY,it.rotation))
+        }
     }
 
     suspend fun updateEditCharacter(context: Context, pathInternal: String) {
@@ -697,6 +720,9 @@ class CustomizeCharacterViewModel : ViewModel() {
                 pathSelectedList = ArrayList(this@CustomizeCharacterViewModel.pathSelectedList)
                 pathInternalEdit = pathInternal
                 isFlip = this@CustomizeCharacterViewModel.isFlip.value
+                layerTransformList = ArrayList(this@CustomizeCharacterViewModel.layerTransformList.map {
+                    LayerTransformModel(it.translationX,it.translationY,it.rotation)
+                })
             }
             MediaHelper.writeListToFile(context, ValueKey.EDIT_FILE_INTERNAL, editList)
 
@@ -718,6 +744,7 @@ class CustomizeCharacterViewModel : ViewModel() {
             pathSelectedList = this@CustomizeCharacterViewModel.pathSelectedList,
             pathInternalEdit = pathInternal,
             isFlip = isFlip.value,
+            layerTransformList = ArrayList(this@CustomizeCharacterViewModel.layerTransformList)
         )
         editList.add(0, newEditModel)
         MediaHelper.writeListToFile(context, ValueKey.EDIT_FILE_INTERNAL, editList)

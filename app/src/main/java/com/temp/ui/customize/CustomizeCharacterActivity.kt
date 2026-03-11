@@ -60,7 +60,9 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             binding.btnRandom,
             binding.color,
             binding.rcvLayer,
+            binding.layoutMove,
             binding.flBottomNav
+
         )
     }
 
@@ -139,9 +141,68 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                     handleSave()
                 }
             }
+            btnMove.tap {
+                if (layoutMove.isVisible) {
+                    layoutMove.invisible()
+                    rcvLayer.visible()
+
+                } else {
+                    layoutMove.visible()
+                    rcvLayer.invisible()
+                }
+            }
             btnRandom.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { handleRandomAllLayer() } }
             btnColor.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { handleStatusColor() } }
             btnHide.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { viewModel.setIsHideView() } }
+
+            val STEP = 10f
+            val ROTATE_STEP =15f
+            btnMoveLeft.tap{
+            val iv = viewModel.imageViewList[viewModel.positionCustom]
+            iv.translationX -= STEP
+            viewModel.layerTransformList[viewModel.positionCustom].translationX = iv.translationX
+            }
+            btnMoveRight.tap{
+            val iv = viewModel.imageViewList[viewModel.positionCustom]
+            iv.translationX += STEP
+            viewModel.layerTransformList[viewModel.positionCustom].translationX = iv.translationX
+            }
+
+            btnMoveUp.tap{
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationY -=STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationY =iv.translationY
+            }
+
+            btnMoveDown.tap{
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationY +=STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationY =iv.translationY
+
+            }
+
+            rotateToLeft.tap{
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.rotation -= ROTATE_STEP
+                viewModel.layerTransformList[viewModel.positionCustom].rotation = iv.rotation
+            }
+
+            rotateToRight.tap{
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.rotation += ROTATE_STEP
+                viewModel.layerTransformList[viewModel.positionCustom].rotation = iv.rotation
+            }
+
+            btnResetMove.tap{
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationX =0f
+                iv.translationY =0f
+                iv.rotation =0f
+                viewModel.resetLayerTransform(viewModel.positionCustom)
+            }
+
+
+
         }
         handleRcv()
     }
@@ -151,6 +212,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             setImageActionBar(btnActionBarLeft, R.drawable.ic_back)
             btnActionBarRight.visible()
             btnActionBarCenter.visible()
+            btnActionBarCenter.setBackgroundResource(R.drawable.ic_reset)
             tvRightText.isSelected = true
         }
         binding.btnFlip.visible()
@@ -272,6 +334,9 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             val deferred2 = async(Dispatchers.Main) {
                 if (deferred1.await()) {
                     viewModel.setImageViewList(binding.layoutCustomLayer)
+                    if(viewModel.layerTransformList.size !=viewModel.imageViewList.size) {
+                        viewModel.initLayerTransformList(viewModel.imageViewList.size)
+                    }
                     dLog("deferred2")
                 }
                 return@async true
@@ -308,6 +373,12 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                                         .into(viewModel.imageViewList[index])
                                 }
                             }
+                            viewModel.layerTransformList.forEachIndexed {index,transform ->
+                                val iv = viewModel.imageViewList[index]
+                                iv.translationX = transform.translationX
+                                iv.translationY = transform.translationY
+                                iv.rotation = transform.rotation
+                            }
                         }
                     }
 
@@ -331,7 +402,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
     private fun checkStatusColor() {
         if (viewModel.colorItemNavList[viewModel.positionNavSelected].isNotEmpty()) {
             binding.color.visible()
-             binding.btnColor.visible()
+            binding.btnColor.visible()
             val (res, status) = if (viewModel.isShowColorList[viewModel.positionNavSelected]) {
                 R.drawable.ic_color to true
             } else {
@@ -411,7 +482,10 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
     }
 
     private fun handleChangeColorLayer(position: Int) {
-        android.util.Log.d("ColorClick", "=== handleChangeColorLayer === position from adapter: $position")
+        android.util.Log.d(
+            "ColorClick",
+            "=== handleChangeColorLayer === position from adapter: $position"
+        )
         lifecycleScope.launch(Dispatchers.IO) {
             // 1. Lấy path màu mới cho item đang được chọn
             val pathColor = viewModel.setClickChangeColor(position)
@@ -483,11 +557,22 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
     private fun handleClickBottomNavigation(positionBottomNavigation: Int) {
         if (positionBottomNavigation == viewModel.positionNavSelected) return
+        if(binding.layoutMove.isVisible){
+            binding.layoutMove.invisible()
+            binding.rcvLayer.visible()
+        }
+
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.setPositionNavSelected(positionBottomNavigation)
             viewModel.setPositionCustom(viewModel.dataCustomize.value!!.layerList[positionBottomNavigation].positionCustom)
             viewModel.setClickBottomNavigation(positionBottomNavigation)
             withContext(Dispatchers.Main) {
+
+                val transform = viewModel.layerTransformList[viewModel.positionCustom]
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationX = transform.translationX
+                iv.translationY = transform.translationY
+                iv.rotation = transform.rotation
                 // Scroll color list to selected item when tab changes
                 if (viewModel.colorItemNavList[viewModel.positionNavSelected].isNotEmpty()) {
                     binding.rcvColor.smoothScrollToPosition(
@@ -501,8 +586,10 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
     private fun confirmExit() {
         val dialog =
-            YesNoDialog(this, R.string.exit, R.string.do_you_want_to_exit,  isError = false,
-                dialogType = DialogType.DELETE_EXIT)
+            YesNoDialog(
+                this, R.string.exit, R.string.do_you_want_to_exit, isError = false,
+                dialogType = DialogType.DELETE_EXIT
+            )
         LanguageHelper.setLocale(this)
         dialog.show()
         dialog.onYesClick = {
@@ -550,7 +637,10 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
                                         // ✅ 2) VẪN SANG AddCharacterActivity như bạn muốn
                                         showInterAll {
-                                            startIntentRightToLeft(AddCharacterActivity::class.java, result.path)
+                                            startIntentRightToLeft(
+                                                AddCharacterActivity::class.java,
+                                                result.path
+                                            )
                                         }
                                     }
                                 }
@@ -603,6 +693,12 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                     layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
                     colorLayerCustomizeAdapter.submitList(viewModel.colorItemNavList[viewModel.positionNavSelected])
                     showInterAll { hideNavigation(false) }
+
+                    viewModel.imageViewList.forEach { iv ->
+                        iv.translationX =0f
+                        iv.translationY=0f
+iv.rotation=0f
+                    }
                 }
             }
         }
@@ -658,7 +754,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
     override fun onRestart() {
         super.onRestart()
-       // initNativeCollab()
+        // initNativeCollab()
 
     }
 
@@ -694,6 +790,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
         applyUiCustomize()
         hideNavigation(true)
     }
+
     @Suppress("DEPRECATION")
     private fun applyUiCustomize() {
         // Cho phép app tự vẽ màu system bar
@@ -710,7 +807,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         // nếu muốn icon status bar đen thì thêm:
         // or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }

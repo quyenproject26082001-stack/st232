@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="14dp"
-        android:padding="2dp"
+        android:padding="0dp"
         android:visibility="visible"
         android:background="@drawable/bg_btn_share_ss"
         app:layout_constraintTop_toBottomOf="@id/lnlShareButtons"

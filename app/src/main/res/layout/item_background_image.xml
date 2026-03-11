@@ -75,9 +75,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/add_image"
-                        android:textColor="#AB5BFF"
+                        android:textColor="@color/app"
                         android:gravity="center"
-                        android:fontFamily="@font/fredoka"
+
+                        android:fontFamily="@font/nunito_bold"
                         android:textSize="8sp"
                         />
 

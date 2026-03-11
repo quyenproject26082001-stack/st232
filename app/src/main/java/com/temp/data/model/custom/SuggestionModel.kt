@@ -1,5 +1,6 @@
 package com.temp.data.model.custom
 
+
 data class SuggestionModel (
     var avatarPath: String = "",
     var positionColorItemList : ArrayList<Int> = arrayListOf(),
@@ -12,4 +13,5 @@ data class SuggestionModel (
     var pathInternalRandom: String = "",
     var pathInternalEdit: String = "",
     var isFlip: Boolean = false,
+    var layerTransformList: ArrayList<LayerTransformModel> = arrayListOf()
 )

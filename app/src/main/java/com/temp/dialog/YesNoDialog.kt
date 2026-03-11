@@ -56,11 +56,11 @@ class YesNoDialog(
         binding.containerDialog.setBackgroundResource(bgRes)
 
         val textColor = when (dialogType) {
-            DialogType.DELETE_EXIT -> Color.parseColor("#FF008C")
-            DialogType.RESET -> Color.parseColor("#2AABEE")
-            DialogType.LOADING -> Color.parseColor("#AB5BFF")
-            DialogType.INTERNET -> Color.parseColor("#FE8700")
-            DialogType.PERMISSION -> Color.parseColor("#AB5BFF")
+            DialogType.DELETE_EXIT -> Color.parseColor("#01579B")
+            DialogType.RESET -> Color.parseColor("#01579B")
+            DialogType.LOADING -> Color.parseColor("#01579B")
+            DialogType.INTERNET -> Color.parseColor("#01579B")
+            DialogType.PERMISSION -> Color.parseColor("#01579B")
         }
 
         binding.tvDescription.setTextColor(textColor)
@@ -69,13 +69,13 @@ class YesNoDialog(
         when (dialogType) {
             DialogType.LOADING, DialogType.INTERNET -> {
                 binding.btnNo.gone()
-                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_internet_yes)
+                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_bottom)
                 (binding.btnYes.layoutParams as LinearLayout.LayoutParams).marginStart = 0
             }
             DialogType.PERMISSION -> {
                 // Set custom backgrounds for PERMISSION dialog buttons
-                binding.btnNo.setBackgroundResource(R.drawable.bg_btn_permission_no)
-                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_permission_yes)
+                binding.btnNo.setBackgroundResource(R.drawable.bg_no_dialog)
+                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_bottom)
                 // Set Yes button text color to white
                 binding.btnYes.setTextColor(Color.parseColor("#FFFFFF"))
                 // Set same padding for both buttons to have equal height
@@ -85,8 +85,8 @@ class YesNoDialog(
             }
             DialogType.RESET -> {
                 // Set custom backgrounds for PERMISSION dialog buttons
-                binding.btnNo.setBackgroundResource(R.drawable.bg_btn_reset_no)
-                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_reset_yes)
+                binding.btnNo.setBackgroundResource(R.drawable.bg_no_dialog)
+                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_bottom)
                 // Set Yes button text color to white
                 binding.btnYes.setTextColor(Color.parseColor("#FFFFFF"))
                 // Set same padding for both buttons to have equal height
@@ -97,8 +97,8 @@ class YesNoDialog(
 
             DialogType.DELETE_EXIT -> {
                 // Set custom backgrounds for PERMISSION dialog buttons
-                binding.btnNo.setBackgroundResource(R.drawable.bg_btn_delete_no)
-                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_delete_yes)
+                binding.btnNo.setBackgroundResource(R.drawable.bg_no_dialog)
+                binding.btnYes.setBackgroundResource(R.drawable.bg_btn_bottom)
                 // Set Yes button text color to white
                 binding.btnYes.setTextColor(Color.parseColor("#FFFFFF"))
                 // Set same padding for both buttons to have equal height

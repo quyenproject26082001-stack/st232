@@ -64,6 +64,7 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
     override fun initView() {
         lifecycleScope.launch { showLoading() }
         dataViewModel.ensureData(this)
+        binding.tvGenerate.isSelected = true
     }
 
     override fun dataObservable() {
@@ -89,6 +90,7 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
             setImageActionBar(btnActionBarLeft, R.drawable.ic_back)
             setTextActionBar(tvCenter, getString(R.string.quickmaketitle))
             tvCenter.isSelected = true
+
         }
     }
 
