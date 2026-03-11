@@ -151,8 +151,9 @@
         android:layerType="hardware"
         android:paddingHorizontal="9.5dp"
         android:paddingTop="16dp"
+        android:paddingBottom="30dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/flBottomNav"
         app:layout_constraintTop_toBottomOf="@+id/gl056"
         app:spanCount="5"
         tools:listitem="@layout/item_customize" />
@@ -202,6 +203,31 @@
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/scaleUp"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="89dp"
+            android:background="@drawable/ic_rotate_to_left"
+            android:gravity="center"
+            android:rotation="0"
+            app:layout_constraintStart_toEndOf="@id/rotateToRight"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/scaleDown"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="136dp"
+            android:background="@drawable/ic_rotate_to_left"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/rotateToLeft"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
             android:id="@+id/btnMoveLeft"
@@ -259,7 +285,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/bg_navi_bottom"
         app:layout_constraintBottom_toBottomOf="@+id/flBottomNav" />

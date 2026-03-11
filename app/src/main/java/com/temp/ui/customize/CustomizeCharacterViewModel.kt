@@ -3,6 +3,7 @@ package com.temp.ui.customize
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -32,6 +33,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlin.collections.get
+import com.bumptech.glide.request.target.Target
+
 
 class CustomizeCharacterViewModel : ViewModel() {
     // Đếm số lần random, chỉ số được chọn
@@ -543,7 +546,8 @@ class CustomizeCharacterViewModel : ViewModel() {
         for (i in 0 until quantityLayer) {
             val imageView = ImageView(frameLayout.context).apply {
                 layoutParams = FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER
                 )
             }
             frameLayout.addView(imageView)

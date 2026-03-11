@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.Handler
+import android.os.Looper
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -82,6 +85,32 @@ fun View.tap(interval: Long = 200, action: (View) -> Unit) {
             action(it)
             DataLocal.lastClickTime = System.currentTimeMillis()
         }
+    }
+}
+
+fun View.tapAndHold(action: () -> Unit) {
+    val handler = Handler(Looper.getMainLooper())
+    val delay = 100L // ms giữa mỗi lần lặp
+
+    val runnable = object : Runnable {
+        override fun run() {
+            action()
+            handler.postDelayed(this, delay)
+        }
+    }
+
+    setOnTouchListener { _, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                action() // chạy ngay lần đầu
+                handler.postDelayed(runnable, 400L)
+            }
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
+                handler.removeCallbacks(runnable)
+            }
+        }
+        true
     }
 }
 

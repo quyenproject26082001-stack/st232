@@ -46,6 +46,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.collections.get
 import kotlin.jvm.java
+import com.bumptech.glide.request.target.Target
+import com.temp.core.extensions.tapAndHold
+
 
 class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
     private val viewModel: CustomizeCharacterViewModel by viewModels()
@@ -155,52 +158,77 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             btnColor.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { handleStatusColor() } }
             btnHide.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { viewModel.setIsHideView() } }
 
-            val STEP = 10f
-            val ROTATE_STEP =15f
-            btnMoveLeft.tap{
-            val iv = viewModel.imageViewList[viewModel.positionCustom]
-            iv.translationX -= STEP
-            viewModel.layerTransformList[viewModel.positionCustom].translationX = iv.translationX
-            }
-            btnMoveRight.tap{
-            val iv = viewModel.imageViewList[viewModel.positionCustom]
-            iv.translationX += STEP
-            viewModel.layerTransformList[viewModel.positionCustom].translationX = iv.translationX
-            }
+            val STEP = 15f
+            val ROTATE_STEP = 15f
+            val SCALE_STEP = 0.01f
 
-            btnMoveUp.tap{
+
+            scaleUp.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
-                iv.translationY -=STEP
-                viewModel.layerTransformList[viewModel.positionCustom].translationY =iv.translationY
+                iv.scaleX += SCALE_STEP
+                iv.scaleY += SCALE_STEP
+                viewModel.layerTransformList[viewModel.positionCustom].scaleX = iv.scaleX
+                viewModel.layerTransformList[viewModel.positionCustom].scaleY = iv.scaleY
             }
 
-            btnMoveDown.tap{
+            scaleDown.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
-                iv.translationY +=STEP
-                viewModel.layerTransformList[viewModel.positionCustom].translationY =iv.translationY
+                iv.scaleX -= SCALE_STEP
+                iv.scaleY -= SCALE_STEP
+                viewModel.layerTransformList[viewModel.positionCustom].scaleX = iv.scaleX
+                viewModel.layerTransformList[viewModel.positionCustom].scaleY = iv.scaleY
+            }
+
+
+            btnMoveLeft.tapAndHold {
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationX -= STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationX =
+                    iv.translationX
+            }
+            btnMoveRight.tapAndHold {
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationX += STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationX =
+                    iv.translationX
+            }
+
+            btnMoveUp.tapAndHold {
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationY -= STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationY =
+                    iv.translationY
+            }
+
+            btnMoveDown.tapAndHold {
+                val iv = viewModel.imageViewList[viewModel.positionCustom]
+                iv.translationY += STEP
+                viewModel.layerTransformList[viewModel.positionCustom].translationY =
+                    iv.translationY
 
             }
 
-            rotateToLeft.tap{
+            rotateToLeft.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
                 iv.rotation -= ROTATE_STEP
                 viewModel.layerTransformList[viewModel.positionCustom].rotation = iv.rotation
             }
 
-            rotateToRight.tap{
+            rotateToRight.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
                 iv.rotation += ROTATE_STEP
                 viewModel.layerTransformList[viewModel.positionCustom].rotation = iv.rotation
             }
 
-            btnResetMove.tap{
+            btnResetMove.tap {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
-                iv.translationX =0f
-                iv.translationY =0f
-                iv.rotation =0f
+                iv.translationX = 0f
+                iv.translationY = 0f
+                iv.rotation = 0f
+                iv.scaleY = 1f
+                iv.scaleX = 1f
                 viewModel.resetLayerTransform(viewModel.positionCustom)
             }
-
 
 
         }
@@ -334,7 +362,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             val deferred2 = async(Dispatchers.Main) {
                 if (deferred1.await()) {
                     viewModel.setImageViewList(binding.layoutCustomLayer)
-                    if(viewModel.layerTransformList.size !=viewModel.imageViewList.size) {
+                    if (viewModel.layerTransformList.size != viewModel.imageViewList.size) {
                         viewModel.initLayerTransformList(viewModel.imageViewList.size)
                     }
                     dLog("deferred2")
@@ -362,6 +390,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                     when (viewModel.statusFrom) {
                         ValueKey.CREATE -> {
                             Glide.with(this@CustomizeCharacterActivity).load(pathImageDefault)
+                                .override(Target.SIZE_ORIGINAL)
                                 .into(viewModel.imageViewList[viewModel.positionCustom])
                         }
 
@@ -370,14 +399,18 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                             viewModel.pathSelectedList.forEachIndexed { index, path ->
                                 if (path != "") {
                                     Glide.with(this@CustomizeCharacterActivity).load(path)
+                                        .override(Target.SIZE_ORIGINAL)
+
                                         .into(viewModel.imageViewList[index])
                                 }
                             }
-                            viewModel.layerTransformList.forEachIndexed {index,transform ->
+                            viewModel.layerTransformList.forEachIndexed { index, transform ->
                                 val iv = viewModel.imageViewList[index]
                                 iv.translationX = transform.translationX
                                 iv.translationY = transform.translationY
                                 iv.rotation = transform.rotation
+                                iv.scaleX = transform.scaleX
+                                iv.scaleY = transform.scaleY
                             }
                         }
                     }
@@ -443,6 +476,8 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             val pathSelected = viewModel.setClickFillLayer(item, position)
             withContext(Dispatchers.Main) {
                 Glide.with(this@CustomizeCharacterActivity).load(pathSelected)
+                    .override(Target.SIZE_ORIGINAL)
+
                     .into(viewModel.imageViewList[viewModel.positionCustom])
                 layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
             }
@@ -471,6 +506,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             val (pathRandom, isMoreColors) = viewModel.setClickRandomLayer()
             withContext(Dispatchers.Main) {
                 Glide.with(this@CustomizeCharacterActivity).load(pathRandom)
+                    .override(Target.SIZE_ORIGINAL)
                     .into(viewModel.imageViewList[viewModel.positionCustom])
                 layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
                 if (isMoreColors) {
@@ -499,7 +535,9 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                 if (pathColor != "") {
                     Glide.with(this@CustomizeCharacterActivity)
                         .load(pathColor)
+                        .override(Target.SIZE_ORIGINAL)
                         .into(viewModel.imageViewList[viewModel.positionCustom])
+
                 }
 
                 // 4. Update highlight trong rcvColor
@@ -557,7 +595,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
     private fun handleClickBottomNavigation(positionBottomNavigation: Int) {
         if (positionBottomNavigation == viewModel.positionNavSelected) return
-        if(binding.layoutMove.isVisible){
+        if (binding.layoutMove.isVisible) {
             binding.layoutMove.invisible()
             binding.rcvLayer.visible()
         }
@@ -573,6 +611,8 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                 iv.translationX = transform.translationX
                 iv.translationY = transform.translationY
                 iv.rotation = transform.rotation
+                iv.scaleX = transform.scaleX
+                iv.scaleY = transform.scaleY
                 // Scroll color list to selected item when tab changes
                 if (viewModel.colorItemNavList[viewModel.positionNavSelected].isNotEmpty()) {
                     binding.rcvColor.smoothScrollToPosition(
@@ -689,16 +729,21 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                         Glide.with(this@CustomizeCharacterActivity).clear(imageView)
                     }
                     Glide.with(this@CustomizeCharacterActivity).load(pathDefault)
+                        .override(Target.SIZE_ORIGINAL)
                         .into(viewModel.imageViewList[viewModel.dataCustomize.value!!.layerList.first().positionCustom])
                     layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
                     colorLayerCustomizeAdapter.submitList(viewModel.colorItemNavList[viewModel.positionNavSelected])
                     showInterAll { hideNavigation(false) }
 
                     viewModel.imageViewList.forEach { iv ->
-                        iv.translationX =0f
-                        iv.translationY=0f
-iv.rotation=0f
+                        iv.translationX = 0f
+                        iv.translationY = 0f
+                        iv.rotation = 0f
+                        iv.scaleX =1f
+                        iv.scaleY=1f
+
                     }
+                    viewModel.initLayerTransformList(viewModel.imageViewList.size)
                 }
             }
         }
@@ -720,6 +765,7 @@ iv.rotation=0f
                 viewModel.pathSelectedList.forEachIndexed { index, path ->
                     Glide.with(this@CustomizeCharacterActivity)
                         .load(path)
+                        .override(Target.SIZE_ORIGINAL)
                         .into(viewModel.imageViewList[index])
                 }
                 layerCustomizeAdapter.submitList(viewModel.itemNavList[viewModel.positionNavSelected])
