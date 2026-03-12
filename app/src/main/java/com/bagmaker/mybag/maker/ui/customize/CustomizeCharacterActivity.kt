@@ -210,7 +210,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             btnColor.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { handleStatusColor() } }
             btnHide.tap { viewModel.checkDataInternet(this@CustomizeCharacterActivity) { viewModel.setIsHideView() } }
 
-            val STEP = 15f
+            val STEP = 5f
             val ROTATE_STEP = 15f
             val SCALE_STEP = 0.01f
             val container = binding.layoutCustomLayer

@@ -128,7 +128,7 @@ class DataViewModel() : ViewModel() {
             val layerList = ArrayList<LayerListModel>(data.parts.size)
 
             // Sort parts by level in ascending order
-            val sortedParts = data.parts.sortedBy { it.level }
+            val sortedParts = data.parts.sortedBy { it.level.toIntOrNull() ?: 0 }
 
             sortedParts.forEachIndexed { indexLayer, dataLayer ->
                 // Handle both "-" and "_" delimiters, similar to local asset loading
@@ -153,7 +153,7 @@ class DataViewModel() : ViewModel() {
             layerList.sortBy { it.positionNavigation }
 
             // Use the minimum level from all parts as the character level
-            val characterLevel = sortedParts.minOfOrNull { it.level } ?: 100
+            val characterLevel = sortedParts.minOfOrNull { it.level.toIntOrNull() ?: 100 } ?: 100
 
             val dataApi = CustomizeModel(
                 dataName = data.name,
@@ -179,10 +179,11 @@ class DataViewModel() : ViewModel() {
     }
 
     private fun getDataAPINoColor(baseDomain: String, part: PartAPI, layer: String): ArrayList<LayerModel> {
-        val layerPath = ArrayList<LayerModel>(part.quantity)
+        val realQuantity = (part.quantity.toIntOrNull() ?: 0) / 2
+        val layerPath = ArrayList<LayerModel>(realQuantity)
         val prefix = "$baseDomain${DomainKey.SUB_DOMAIN}/${part.position}/${layer}/"
         val suffix = DomainKey.LAYER_EXTENSION
-        for (i in 1..part.quantity) {
+        for (i in 1..realQuantity) {
             layerPath.add(
                 LayerModel(
                     "$prefix${i}$suffix",
@@ -196,12 +197,13 @@ class DataViewModel() : ViewModel() {
     }
 
     private fun getDataAPIColor(baseDomain: String, part: PartAPI, layer: String): ArrayList<LayerModel> {
-        val layerPath = ArrayList<LayerModel>(part.quantity)
+        val realQuantity = part.quantity.toIntOrNull() ?: 0
+        val layerPath = ArrayList<LayerModel>(realQuantity)
         val getColorCode = part.colorArray.split(",")
         val prefix = "$baseDomain${DomainKey.SUB_DOMAIN}/${part.position}/${layer}/"
         val suffix = DomainKey.LAYER_EXTENSION
 
-        for (i in 1..part.quantity) {
+        for (i in 1..realQuantity) {
             val listColor = ArrayList<ColorModel>(getColorCode.size)
             for (j in 0 until getColorCode.size) {
                 listColor.add(

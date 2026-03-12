@@ -90,7 +90,7 @@ fun View.tap(interval: Long = 200, action: (View) -> Unit) {
 
 fun View.tapAndHold(action: () -> Unit) {
     val handler = Handler(Looper.getMainLooper())
-    val delay = 100L // ms giữa mỗi lần lặp
+    val delay = 10L // ms giữa mỗi lần lặp
 
     val runnable = object : Runnable {
         override fun run() {
