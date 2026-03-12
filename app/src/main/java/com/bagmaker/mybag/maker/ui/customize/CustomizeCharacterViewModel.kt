@@ -707,7 +707,7 @@ class CustomizeCharacterViewModel : ViewModel() {
         setIsFlipValue(suggestionModel.isFlip)
         layerTransformList.clear()
         suggestionModel.layerTransformList.forEach {
-            layerTransformList.add(LayerTransformModel(it.translationX,it.translationY,it.rotation))
+            layerTransformList.add(LayerTransformModel(it.translationX,it.translationY,it.rotation,it.scaleX,it.scaleY))
         }
     }
 

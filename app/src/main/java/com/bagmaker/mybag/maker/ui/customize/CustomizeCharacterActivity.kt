@@ -53,6 +53,11 @@ import com.bagmaker.mybag.maker.core.extensions.tapAndHold
 
 
 class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
+
+    companion object {
+        const val MIN_SCALE = 0.5f
+        const val MAX_SCALE = 1.5f
+    }
     private val viewModel: CustomizeCharacterViewModel by viewModels()
     private var lastClickedLayerPosition: Int =
         -1 // Track last clicked layer position for scrolling
@@ -156,6 +161,20 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
     }
 
 
+    private fun updateScaleButtons() {
+        val iv = viewModel.imageViewList[viewModel.positionCustom]
+        binding.scaleUp.apply {
+            val reached = iv.scaleX >= MAX_SCALE
+            alpha = if (reached) 0.4f else 1f
+            isEnabled = !reached
+        }
+        binding.scaleDown.apply {
+            val reached = iv.scaleX <= MIN_SCALE
+            alpha = if (reached) 0.4f else 1f
+            isEnabled = !reached
+        }
+    }
+
     private fun updateMoveButtons(){
         val iv = viewModel.imageViewList[viewModel.positionCustom]
         val maxX = binding.layoutCustomLayer.width/2f
@@ -214,8 +233,6 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
             val ROTATE_STEP = 15f
             val SCALE_STEP = 0.01f
             val container = binding.layoutCustomLayer
-            val MIN_SCALE = 0.5f
-            val MAX_SCALE = 1.5f
 
 
 
@@ -227,24 +244,24 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
 
             scaleUp.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
-                iv.scaleX =(iv.scaleX + SCALE_STEP).coerceAtMost(MAX_SCALE)
-                iv.scaleY =(iv.scaleY + SCALE_STEP).coerceAtMost(MAX_SCALE)
+                iv.scaleX = (iv.scaleX + SCALE_STEP).coerceAtMost(MAX_SCALE)
+                iv.scaleY = (iv.scaleY + SCALE_STEP).coerceAtMost(MAX_SCALE)
                 viewModel.layerTransformList[viewModel.positionCustom].scaleX = iv.scaleX
                 viewModel.layerTransformList[viewModel.positionCustom].scaleY = iv.scaleY
                 updateResetBtn()
                 updateMoveButtons()
+                updateScaleButtons()
             }
 
             scaleDown.tapAndHold {
                 val iv = viewModel.imageViewList[viewModel.positionCustom]
-                iv.scaleX =(iv.scaleX - SCALE_STEP).coerceAtLeast(MIN_SCALE)
-                iv.scaleY =(iv.scaleY - SCALE_STEP).coerceAtLeast(MIN_SCALE)
-
+                iv.scaleX = (iv.scaleX - SCALE_STEP).coerceAtLeast(MIN_SCALE)
+                iv.scaleY = (iv.scaleY - SCALE_STEP).coerceAtLeast(MIN_SCALE)
                 viewModel.layerTransformList[viewModel.positionCustom].scaleX = iv.scaleX
                 viewModel.layerTransformList[viewModel.positionCustom].scaleY = iv.scaleY
                 updateResetBtn()
                 updateMoveButtons()
-
+                updateScaleButtons()
             }
 
 
@@ -332,6 +349,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                 viewModel.resetLayerTransform(viewModel.positionCustom)
                 updateResetBtn()
                 updateMoveButtons()
+                updateScaleButtons()
             }
 
 
@@ -743,6 +761,7 @@ class CustomizeCharacterActivity : BaseActivity<ActivityCustomizeBinding>() {
                 checkStatusColor()
                 updateResetBtn()
                 updateMoveButtons()
+                updateScaleButtons()
                 val isNone =
                     viewModel.keySelectedItemList[viewModel.positionNavSelected].isEmpty()
                 binding.btnMove.apply {

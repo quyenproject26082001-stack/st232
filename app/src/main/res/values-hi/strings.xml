@@ -103,7 +103,7 @@
     <string name="exit_add">अपनी पृष्ठभूमि से बाहर निकलें</string>
     <string name="exit_bg">अपनी पृष्ठभूमि से बाहर निकलें</string>
     <string name="loading">लोड हो रहा है</string>
-    <string name="internet_required_for_more_characters">अधिक पात्रों के लिए इंटरनेट आवश्यक है</string>
+    <string name="internet_required_for_more_characters">अधिक पात्रों के लिए इंटरनेट चालू करें</string>
     <string name="music">संगीत</string>
     <string name="my_work">मेरा काम</string>
     <string name="bag_maker">बैग मेकर</string>
