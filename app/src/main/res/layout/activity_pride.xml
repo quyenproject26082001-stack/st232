@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.temp.ui.pride.PrideActivity"
+    tools:context="com.bagmaker.mybag.maker.ui.pride.PrideActivity"
     android:background="#EEF0FB">
 
     <!-- Action Bar -->
@@ -317,7 +317,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.temp.core.custom.drawview.CropView
+                <com.bagmaker.mybag.maker.core.custom.drawview.CropView
                     android:id="@+id/cropView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -643,7 +643,7 @@
                     android:text="@string/pride_design_subtitle" />
 
                 <!-- Preview -->
-                <com.temp.core.custom.drawview.PreviewView
+                <com.bagmaker.mybag.maker.core.custom.drawview.PreviewView
                     android:id="@+id/imgPreview"
                     android:layout_width="200dp"
                     android:layout_height="200dp"

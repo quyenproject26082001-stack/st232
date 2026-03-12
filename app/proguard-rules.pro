@@ -81,6 +81,6 @@
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
 
--keep class com.temp.ui.splash.SplashActivity.** {*; }
--keep class com.temp.data.** {*; }
+-keep class com.bagmaker.mybag.maker.ui.splash.SplashActivity.** {*; }
+-keep class com.bagmaker.mybag.maker.data.** {*; }
 -keep public class com.google.android.gms.** { public protected *; }

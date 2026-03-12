@@ -130,7 +130,7 @@
 
         <provider
             android:name=".core.utils.share.whatsapp.StickerContentProvider"
-            android:authorities="com.temp.core.utils.share.whatsapp.StickerContentProvider"
+            android:authorities="com.bagmaker.mybag.maker.core.utils.share.whatsapp.StickerContentProvider"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.whatsapp.sticker.READ" />

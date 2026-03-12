@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.temp'
+    namespace 'com.bagmaker.mybag.maker'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.temp"
+        applicationId "com.bagmaker.mybag.maker"
         minSdk 24
         targetSdk 36
         versionCode 1

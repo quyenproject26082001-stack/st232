@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="74dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="-20dp"
                 app:layout_constraintDimensionRatio="218:163"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_bag_home"
@@ -88,32 +88,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="47dp"
-                android:layout_marginTop="-70dp"
+                android:layout_marginTop="-60dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/img_home_2"
                app:layout_constraintTop_toBottomOf="@id/btnMaker1" />
 
 
             <!--            tv2-->
-            <com.temp.core.custom.text.DoubleStrokeTextView
+            <com.bagmaker.mybag.maker.core.custom.text.DoubleStrokeTextView
                 android:id="@+id/tv1"
                 style="@style/single_marquee"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:fontFamily="@font/grobold"
+                android:fontFamily="@font/archivoblack_regular"
                 android:gravity="center"
                 android:text="@string/bag_maker"
                 android:textColor="#FFEA00"
-                android:textSize="32sp"
+                android:textSize="31sp"
                 android:layout_marginTop="0dp"
+                android:paddingHorizontal="20dp"
+
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnMaker"
                 app:layout_constraintEnd_toEndOf="@+id/btnMaker"
                 app:layout_constraintStart_toStartOf="@id/btnMaker"
                 app:layout_constraintTop_toTopOf="@+id/btnMaker"
-                app:outerStrokeColor="@color/white"
-                app:outerStrokeWidth="4dp" />
+              />
 
 
 
@@ -129,25 +130,26 @@
 
 
             <!--            tv2-->
-            <com.temp.core.custom.text.DoubleStrokeTextView
+            <com.bagmaker.mybag.maker.core.custom.text.DoubleStrokeTextView
                 android:id="@+id/tvRandomBag"
                 style="@style/single_marquee"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/grobold"
+                android:fontFamily="@font/archivoblack_regular"
                 android:gravity="center"
                 android:text="@string/random_bag"
                 android:textColor="#DB6C8A"
-                android:textSize="32sp"
+                android:textSize="31sp"
                 android:layout_marginTop="0dp"
+                android:paddingHorizontal="20dp"
+
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 app:layout_constraintEnd_toEndOf="@+id/btnRandomBag"
                 app:layout_constraintStart_toStartOf="@id/btnRandomBag"
                 app:layout_constraintTop_toTopOf="@id/btnRandomBag"
                 app:layout_constraintBottom_toBottomOf="@id/btnRandomBag"
-                app:outerStrokeColor="@color/white"
-                app:outerStrokeWidth="4dp" />
+               />
 
 
 
@@ -167,25 +169,26 @@
 
 
             <!--            tv2-->
-            <com.temp.core.custom.text.DoubleStrokeTextView
+            <com.bagmaker.mybag.maker.core.custom.text.DoubleStrokeTextView
                 android:id="@+id/tvQuickMake"
                 style="@style/single_marquee"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:fontFamily="@font/grobold"
+                android:fontFamily="@font/archivoblack_regular"
                 android:gravity="center"
                 android:text="@string/quick_maker"
                 android:textColor="#01579B"
                 android:textSize="16sp"
                 android:layout_marginTop="0dp"
                 android:layout_marginStart="0dp"
+                android:paddingHorizontal="10dp"
+
                 android:layout_marginEnd="0dp"
                 app:layout_constraintEnd_toEndOf="@+id/btnQuickMaker"
                 app:layout_constraintStart_toStartOf="@id/btnQuickMaker"
                 app:layout_constraintTop_toTopOf="@id/btnQuickMaker"
                 app:layout_constraintBottom_toBottomOf="@id/btnQuickMaker"
-                app:outerStrokeColor="@color/white"
-                app:outerStrokeWidth="4dp" />
+             />
 
             <ImageView
                 android:id="@+id/btnMyWork"
@@ -203,16 +206,17 @@
 
 
             <!--            tv2-->
-            <com.temp.core.custom.text.DoubleStrokeTextView
+            <com.bagmaker.mybag.maker.core.custom.text.DoubleStrokeTextView
                 android:id="@+id/tvMyWork"
                 style="@style/single_marquee"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:fontFamily="@font/grobold"
+                android:fontFamily="@font/archivoblack_regular"
                 android:gravity="center"
                 android:text="@string/my_work"
                 android:textColor="#FF008C"
                 android:textSize="16sp"
+                android:paddingHorizontal="20dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
@@ -220,8 +224,7 @@
                 app:layout_constraintStart_toStartOf="@id/btnMyWork"
                 app:layout_constraintTop_toTopOf="@id/btnQuickMaker"
                 app:layout_constraintBottom_toBottomOf="@id/btnQuickMaker"
-                app:outerStrokeColor="@color/white"
-                app:outerStrokeWidth="4dp" />
+               />
 
 
 
