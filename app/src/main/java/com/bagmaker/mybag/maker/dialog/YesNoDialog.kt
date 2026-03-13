@@ -2,6 +2,7 @@ package com.bagmaker.mybag.maker.dialog
 
 import android.app.Activity
 import android.graphics.Color
+import android.graphics.drawable.DrawableWrapper
 import android.widget.LinearLayout
 import com.bagmaker.mybag.maker.core.extensions.gone
 import com.bagmaker.mybag.maker.core.extensions.hideNavigation
