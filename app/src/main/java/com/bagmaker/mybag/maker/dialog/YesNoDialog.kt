@@ -42,6 +42,7 @@ class YesNoDialog(
         }
         context.hideNavigation()
         binding.tvTitle.isSelected = true
+        binding.tvDescription.isSelected = true
     }
 
     private fun initBackground() {
