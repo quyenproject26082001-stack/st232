@@ -231,18 +231,18 @@ class RandomCharacterActivity : BaseActivity<ActivityRandomCharacterBinding>() {
         }
     }
 //
-//    fun initNativeCollab() {
-//    Admob.getInstance().loadNativeCollapNotBanner(this,getString(R.string.native_cl_trending), binding.flNativeCollab)
-//    }
+    fun initNativeCollab() {
+    Admob.getInstance().loadNativeCollapNotBanner(this,getString(R.string.native_cl_quickMake), binding.flNativeCollab)
+    }
 
-//    override fun initAds() {
-//        initNativeCollab()
-//    }
-//
-//    override fun onRestart() {
-//        super.onRestart()
-//        initNativeCollab()
-//    }
+    override fun initAds() {
+        initNativeCollab()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        initNativeCollab()
+    }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

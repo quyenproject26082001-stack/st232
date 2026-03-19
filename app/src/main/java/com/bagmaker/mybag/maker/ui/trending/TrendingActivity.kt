@@ -37,6 +37,7 @@ import com.bagmaker.mybag.maker.ui.customize.CustomizeCharacterActivity
 import com.bagmaker.mybag.maker.ui.customize.CustomizeCharacterViewModel
 import com.bagmaker.mybag.maker.ui.home.DataViewModel
 import com.bagmaker.mybag.maker.ui.random_character.RandomCharacterViewModel
+import com.lvt.ads.util.Admob
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -80,7 +81,7 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
     override fun viewListener() {
         binding.apply {
             actionBar.btnActionBarLeft.tap { showInterAll { handleBackLeftToRight() } }
-            btnGenerate.tap(0) { handleGenerate() }
+            btnGenerate.tap(0) { showInterAll {  handleGenerate() } }
             btnEdit.tap { handleEdit() }
         }
     }
@@ -378,4 +379,19 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding>() {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
     }
+
+
+    fun initNativeCollab() {
+        Admob.getInstance().loadNativeCollapNotBanner(this,getString(R.string.native_cl_random), binding.flNativeCollab)
+    }
+
+    override fun initAds() {
+        initNativeCollab()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        initNativeCollab()
+    }
+
 }

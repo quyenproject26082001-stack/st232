@@ -160,20 +160,21 @@
         android:text="@string/continue_per"
         android:textColor="#014F69"
         android:textSize="18sp"
-        android:layout_marginBottom="190dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_goneMarginBottom="190dp"
+        app:layout_constraintBottom_toTopOf="@id/native_ads"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/native_ads"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <FrameLayout
+        android:id="@+id/native_ads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-<!--        <include layout="@layout/ads_native_big_btn_bottom_shimmer" />-->
+        <include layout="@layout/ads_native_big_btn_bottom_shimmer" />
 
-<!--    </FrameLayout>-->
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

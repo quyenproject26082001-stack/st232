@@ -58,7 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             actionBar.btnActionBarRight.tap(800) { startIntentRightToLeft(SettingsActivity::class.java) }
             btnMaker.tap(800) { startIntentRightToLeft(ChooseCharacterActivity::class.java) }
             btnMyWork.tap(800) { showInterAll { startIntentRightToLeft(MyCreationActivity::class.java) } }
-           btnQuickMaker.tap(800) { showInterAll {startIntentRightToLeft(RandomCharacterActivity::class.java) }}
+           btnQuickMaker.tap(800) {startIntentRightToLeft(RandomCharacterActivity::class.java) }
             btnRandomBag.tap(800) {  startIntentRightToLeft(TrendingActivity::class.java)}
 
         }
@@ -124,7 +124,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         deleteTempFolder()
         LanguageHelper.setLocale(this)
         updateText()
-        //initNativeCollab()
+        initNativeCollab()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
